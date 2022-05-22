@@ -34,7 +34,7 @@ render() {
     <header data-testid="header-component">
       <Link to="/search" data-testid="link-to-search">Search</Link>
       <Link to="/favorites" data-testid="link-to-favorites">Favorites</Link>
-      <Link to="/Profile" data-testid="link-to-profile">Profile</Link>
+      <Link to="/profile" data-testid="link-to-profile">Profile</Link>
       <p data-testid="header-user-name">
         {' '}
         { load ? <Loading /> : userName }
