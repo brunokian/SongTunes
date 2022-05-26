@@ -7,16 +7,17 @@ import ArtistAlbums from './ArtistAlbums';
 class Search extends React.Component {
   state = {
     inputText: '',
+    test: '',
     buttonHasBlocked: true,
     load: false,
-    hasSearch: false,
+    hasSearch: true,
     searchResult: [],
   }
 
   searchArtist = async () => {
     const { inputText } = this.state;
     this.setState(
-      { load: true },
+      { load: true, test: inputText },
       async () => {
         const result = await searchAlbumsAPI(inputText);
         this.setState({
@@ -25,6 +26,10 @@ class Search extends React.Component {
           hasSearch: true,
           searchResult: result,
         });
+        if (result.length === 0) {
+          this.setState({ hasSearch: false });
+          console.log(result);
+        }
       },
     );
   }
@@ -46,7 +51,8 @@ class Search extends React.Component {
   }
 
   render() {
-    const { inputText, buttonHasBlocked, load, searchResult, hasSearch } = this.state;
+    const {
+      inputText, buttonHasBlocked, load, searchResult, hasSearch, test } = this.state;
 
     return (
       <div data-testid="page-search">
@@ -69,10 +75,21 @@ class Search extends React.Component {
         >
           Pesquisar
         </button>
-        { load ? <Loading /> : <ArtistAlbums
-          searchResult={ searchResult }
-          hasSearch={ hasSearch }
-        /> }
+        <p>
+          Resultado de álbuns de:
+          {' '}
+          {test}
+        </p>
+        { hasSearch ? null : <p>Nenhum álbum foi encontrado</p> }
+        { load ? <Loading /> : searchResult.map((obj) => (
+          <ArtistAlbums
+            key={ obj.collectionId }
+            albumName={ obj.collectionName }
+            artistName={ obj.artistName }
+            collectionId={ obj.collectionId }
+            search={ inputText }
+          />
+        )) }
       </div>
     );
   }
