@@ -1,13 +1,33 @@
 import React from 'react';
 import Header from './components/Header';
+import Loading from './Loading';
+import searchAlbumsAPI from './services/searchAlbumsAPI';
+import ArtistAlbums from './ArtistAlbums';
 
 class Search extends React.Component {
   state = {
     inputText: '',
     buttonHasBlocked: true,
+    load: false,
+    hasSearch: false,
+    searchResult: [],
   }
 
-  aqui = () => { console.log('teste'); }
+  searchArtist = async () => {
+    const { inputText } = this.state;
+    this.setState(
+      { load: true },
+      async () => {
+        const result = await searchAlbumsAPI(inputText);
+        this.setState({
+          load: false,
+          inputText: '',
+          hasSearch: true,
+          searchResult: result,
+        });
+      },
+    );
+  }
 
   validation = () => {
     const { inputText } = this.state;
@@ -26,7 +46,7 @@ class Search extends React.Component {
   }
 
   render() {
-    const { inputText, buttonHasBlocked } = this.state;
+    const { inputText, buttonHasBlocked, load, searchResult, hasSearch } = this.state;
 
     return (
       <div data-testid="page-search">
@@ -43,13 +63,16 @@ class Search extends React.Component {
           id="botao-pesquisa"
           name="botao-pesquisa"
           type="submit"
-          onClick={ this.aqui }
+          onClick={ this.searchArtist }
           disabled={ buttonHasBlocked }
           data-testid="search-artist-button"
         >
           Pesquisar
         </button>
-        <p>search componente</p>
+        { load ? <Loading /> : <ArtistAlbums
+          searchResult={ searchResult }
+          hasSearch={ hasSearch }
+        /> }
       </div>
     );
   }

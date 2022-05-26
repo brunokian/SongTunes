@@ -67,19 +67,6 @@ class App extends React.Component {
               load={ load }
             />) }
           />}
-          {/* <Route
-            exact
-            path="/"
-            render={ (props) => (<Login
-              { ...props }
-              login={ login }
-              loginValidation={ loginValidation }
-              handleChange={ this.handleChange }
-              hasLogged={ hasLogged }
-              logging={ this.logging }
-              load={ load }
-            />) }
-          /> */}
           <Route path="/search" component={ Search } />
           <Route path="/album/:id" component={ Album } />
           <Route path="/favorites" component={ Favorites } />
