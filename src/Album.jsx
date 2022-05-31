@@ -36,6 +36,7 @@ class Album extends React.Component {
     }
     const favoriteSongs = await getFavoriteSongs();
     this.setState({ favoriteSongs, load: false });
+    console.log(favoriteSongs);
   };
 
   musicsOfAlbum = async () => {
