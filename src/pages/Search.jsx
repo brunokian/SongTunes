@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from './components/Header';
-import Loading from './Loading';
-import searchAlbumsAPI from './services/searchAlbumsAPI';
-import ArtistAlbums from './ArtistAlbums';
+import Header from '../components/Header';
+import Loading from '../components/Loading';
+import searchAlbumsAPI from '../services/searchAlbumsAPI';
+import ArtistAlbums from '../components/ArtistAlbums';
 
 class Search extends React.Component {
   state = {

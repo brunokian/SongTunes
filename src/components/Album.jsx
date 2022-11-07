@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import Header from './components/Header';
-import MusicCard from './components/MusicCard';
+import Header from './Header';
+import MusicCard from './MusicCard';
 import Loading from './Loading';
-import { getFavoriteSongs, removeSong, addSong } from './services/favoriteSongsAPI';
-import getMusics from './services/musicsAPI';
+import { getFavoriteSongs, removeSong, addSong } from '../services/favoriteSongsAPI';
+import getMusics from '../services/musicsAPI';
 
 class Album extends React.Component {
   state = {

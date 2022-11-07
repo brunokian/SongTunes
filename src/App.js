@@ -1,13 +1,15 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import Login from './Login';
-import Search from './Search';
-import Album from './Album';
-import Favorites from './Favotires';
-import Profile from './Profile';
-import ProfileEdit from './ProfileEdit';
-import NotFound from './NotFound';
+import Login from './pages/Login';
+import Search from './pages/Search';
+import Album from './components/Album';
+import Favorites from './pages/Favotires';
+import Profile from './pages/Profile';
+import ProfileEdit from './pages/ProfileEdit';
+import NotFound from './components/NotFound';
+import store from './redux';
 
 import { createUser } from './services/userAPI';
 
@@ -52,29 +54,31 @@ class App extends React.Component {
     const { login, loginValidation, hasLogged, load } = this.state;
 
     return (
-      <BrowserRouter>
-        <Switch>
-          {hasLogged ? <Redirect to="/search" /> : <Route
-            exact
-            path="/"
-            render={ (props) => (<Login
-              { ...props }
-              login={ login }
-              loginValidation={ loginValidation }
-              handleChange={ this.handleChange }
-              hasLogged={ hasLogged }
-              logging={ this.logging }
-              load={ load }
-            />) }
-          />}
-          <Route path="/search" component={ Search } />
-          <Route path="/album/:id" component={ Album } />
-          <Route path="/favorites" component={ Favorites } />
-          <Route path="/profile/edit" component={ ProfileEdit } />
-          <Route path="/profile" component={ Profile } />
-          <Route component={ NotFound } />
-        </Switch>
-      </BrowserRouter>
+      <Provider store={ store }>
+        <BrowserRouter>
+          <Switch>
+            {hasLogged ? <Redirect to="/search" /> : <Route
+              exact
+              path="/"
+              render={ (props) => (<Login
+                { ...props }
+                login={ login }
+                loginValidation={ loginValidation }
+                handleChange={ this.handleChange }
+                hasLogged={ hasLogged }
+                logging={ this.logging }
+                load={ load }
+              />) }
+            />}
+            <Route path="/search" component={ Search } />
+            <Route path="/album/:id" component={ Album } />
+            <Route path="/favorites" component={ Favorites } />
+            <Route path="/profile/edit" component={ ProfileEdit } />
+            <Route path="/profile" component={ Profile } />
+            <Route component={ NotFound } />
+          </Switch>
+        </BrowserRouter>
+      </Provider>
     );
   }
 }

@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 
 // import { createUser } from './services/userAPI';
 
 class Login extends React.Component {
   render() {
     const { login, handleChange, logging, loginValidation, load } = this.props;
-    console.log(logging);
     if (load) {
       return <Loading />;
     }
